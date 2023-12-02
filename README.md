@@ -19,13 +19,16 @@ from the Wintun release ZIP archive.
 
 To create a virtual new network adapter, call
 
+```
 SharpTun.Implementation.Wintun.ManagedWintunAdapter.Create(
 	string AdapterName, 
 	string TunnelType, 
 	Guid? RequestedGUID)
+```
 
 For example:
 
+```
 using(var adapter = SharpTun.Implementation.Wintun.ManagedWintunAdapter.Create(
 	"My Virtual Network Adapter 1", 
 	"WinTun", 
@@ -33,6 +36,7 @@ using(var adapter = SharpTun.Implementation.Wintun.ManagedWintunAdapter.Create(
 {
 	// Use the adapter
 }
+```
 
 You will need local administrator privileges, as this call will install the 
 Wintun virtual network adapter driver.  It's possible to avoid needing 
@@ -47,15 +51,19 @@ group.
 After creating the network adapter, you can create a session that enables
 the network adapter for reading and writing packets by calling Start:
 
+```
 SharpTun.Interface.ITunSession.Start(int Capacity);
+```
 
 For instance:
 
+```
 using(var session = adapter.Start(0x400000)) 
 {
 	session.SendPacket(GetDataToSend());
 	ProcessPacket(session.ReceivePacket());
 }
+```
 
 As the Wintun library is a C-style library that consumes native resources
 (e.g. buffers in the kernel), you should always use the Disposable pattern on
